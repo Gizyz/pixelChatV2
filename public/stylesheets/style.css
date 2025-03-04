@@ -1,0 +1,83 @@
+@import url('https://fonts.googleapis.com/css?family=DM%20Mono:700|Sura:400');
+body {
+  font-family: 'Sura';
+  font-weight: 400;
+}
+
+h1, h2, h3, h4, h5 {
+  font-family: 'DM Mono';
+  font-weight: 700;
+}
+html {font-size: 100%;} /* 16px */
+h1 {font-size: 4.210rem; /* 67.36px */}
+h2 {font-size: 3.158rem; /* 50.56px */}
+h3 {font-size: 2.369rem; /* 37.92px */}
+h4 {font-size: 1.777rem; /* 28.48px */}
+h5 {font-size: 1.333rem; /* 21.28px */}
+small {font-size: 0.750rem; /* 12px */}
+
+:root[data-theme="light"] {
+  --text: #343434;
+  --background: #fbf0f0;
+  --primary: #c8433d;
+  --secondary: #dde196;
+  --accent: #b3d66e;
+}
+:root[data-theme="dark"] {
+  --text: #cccccc;
+  --background: #100404;
+  --primary: #c33e37;
+  --secondary: #64671d;
+  --accent: #6d8f28;
+}
+
+
+
+body {
+  padding: 0;
+  margin: 0;
+  color: var(--text);
+  background-color: var(--background);
+}
+h1 {
+  font-family: dm mono;
+}
+
+section {
+  width: auto;
+  display: grid;
+  grid-column: auto;
+  justify-items: center
+}
+
+.nav {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 50px;
+  border-bottom: var(--primary) solid thin;
+}
+.nav a {
+  text-decoration: none;
+  color: var(--text)
+}
+
+.chat {
+  width: 60vw;
+  height: 200px;
+  margin: 10px;
+  background-color: rgba(114, 0, 0, 0.158);
+  border-radius: 10px;
+}
+.chatInput {
+  width: 60vw;
+  height: 20px;
+  background-color: rgba(114, 0, 0, 0.158);
+  border-radius: 5px;
+}
+.login {
+  display:flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+

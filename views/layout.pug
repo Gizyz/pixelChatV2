@@ -1,0 +1,18 @@
+doctype html
+html(lang="en", data-theme="light")
+  head
+    title= title
+    link(rel='stylesheet', href='/stylesheets/style.css')
+  body
+    block navbar
+      div.nav
+        a(href='./') home 
+        a(href='./about') about
+        a(href='./projects') projects
+
+    section
+      block content
+      
+    
+    
+    script(src="/javascripts/script.js")

@@ -1,0 +1,15 @@
+extends layout
+
+block content
+  section
+    h1 Login
+
+    form(action="/login/" method="post")
+      input.loginInput(name="name_field" type="text" placeholder="username")
+      input.loginInput(name="pass_field" type="text" placeholder="password")
+      
+      div.login
+        button.loginPost(type="submit") Login
+        a.signup(href="./signup") create account
+  script(src="/javascripts/chatscript.js")
+
