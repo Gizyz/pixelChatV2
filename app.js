@@ -1,18 +1,52 @@
-var createError = require("http-errors");
-var express = require("express");
-var path = require("path");
-var cookieParser = require("cookie-parser");
-var logger = require("morgan");
-var livereload = require("livereload");
-var connectLiveReload = require("connect-livereload");
+const createError = require("http-errors");
+const express = require("express");
+const path = require("path");
+const cookieParser = require("cookie-parser");
+const session = require('express-session');
+const pgSession = require('connect-pg-simple')(session);
+const sessionPool = require('pg').Pool;
+const logger = require("morgan");
+const livereload = require("livereload");
+const connectLiveReload = require("connect-livereload");
 
 var indexRouter = require("./routes/index");
-var aboutRouter = require("./routes/about");
-var projectsRouter = require("./routes/projects");
-var postPullRouter = require("./routes/postPull");
+
+// session stuff
+
+const { 
+  PORT = 3000,
+  NODE_ENV = 'development',
+
+  SESS_NAME = 'sid',
+  SESS_SECRET = 'asdasdadasdasd',
+  SESS_LIFETIME = 1000*60 * 60 * 2
+} = process.env
+
+const users = [
+  { id: 1, name: 'Alex', password: 'secret'},
+  { id: 2, name: 'Bob', password: 'secret'},
+  { id: 3, name: 'Linda', password: 'secret'}
+
+]
+
+const DB_USER = 'karl'
+const DB_PASS = 'Karl 0305'
+const DB_HOST = 'locahost'
+const DB_PORT = 5432
+const DB_NAME = 'pixelDb'
+
+
+const sessionDBaccess = new sessionPool({
+  user: DB_USER,
+  password: DB_PASS,
+  host: DB_HOST,
+  port: DB_PORT,
+  database: DB_NAME
+})
 
 
 
+// liveReload remove when fininshed 
 const liveReloadServer = livereload.createServer();
 liveReloadServer.server.once("connection", () => {
   setTimeout(() => {
@@ -20,9 +54,35 @@ liveReloadServer.server.once("connection", () => {
   }, 100);
 });
 
+// express stuff idk
 var app = express();
 
 app.use(connectLiveReload());
+
+//session stuff
+
+
+
+app.use(session({
+    store: new pgSession({
+      pool: sessionDBaccess,
+      tableName: 'session'
+    }),
+    name: SESS_NAME,
+    resave: false,
+    saveUninitialized: false,
+    secret: SESS_SECRET,
+    cookie: {
+      maxAge: SESS_LIFETIME,
+      sameSite: true,
+      secure: false
+    }
+  }))
+
+
+
+
+
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
@@ -35,9 +95,6 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/", indexRouter);
-app.use("/about", aboutRouter);
-app.use("/projects", projectsRouter);
-app.use("/postPull", postPullRouter);
 
 
 // catch 404 and forward to error handler

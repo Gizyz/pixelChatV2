@@ -1,0 +1,15 @@
+extends layout
+
+block content
+  section
+    h1 Signup
+
+    form.login(action="/signupPost/" method="post")
+      input.loginInput(name="name_field" type="text" placeholder="name")
+      input.loginInput(name="usr_name_field" type="text" placeholder="username")
+      input.loginInput(name="pass_field" type="text" placeholder="password")     
+      button.loginPost(type="submit") Create User
+    a.signup(href="./Login") Login
+
+  script(src="/javascripts/chatscript.js")
+
