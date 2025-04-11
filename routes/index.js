@@ -1,20 +1,15 @@
+var db = require('./functions.js');
 var express = require('express');
 var router = express.Router();
 
 console.log("http://localhost:3000");
 const redirectLogin = (req, res, next) => {
-  if (!req.session.userId) {
     res.redirect('/login')
-  } else {
-    next()
-  }
+
 }
 const redirectHome = (req, res, next) => {
-  if (req.session.userId) {
     res.redirect('/')
-  } else {
-    next()
-  }
+
 }
 
 
@@ -22,9 +17,8 @@ const redirectHome = (req, res, next) => {
 /* GET home page. */
 router.get('/', redirectLogin,function(req, res, next) {
   console.log(req.session)
-  const { userId } = req.session
 
-  res.render('index', { title: 'Home', userId: `${userId ? `` : ``}` });
+  res.render('index', { title: 'Home' });
 
 });
 
